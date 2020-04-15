@@ -2,6 +2,8 @@ import express from 'express'
 import config from './config'
 import indexRouter from '../routes/index'
 
+import cors from 'cors'
+import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import session from 'express-session'
@@ -9,14 +11,17 @@ import session from 'express-session'
 const app = express();
 
 //使用cors解决跨域问题
-import cors from 'cors'
-app.use(cors());
+app.use(cors({
+	origin:config.cors,
+	credentials:true
+}));
 
 app.use(cookieParser());
 
 //使用express-session保存用户登录状况
 app.use(session({
 	secret: config.secret,
+	name:'connect.sid',
 	resave: false,
 	saveUninitialized: true,
 	cookie:{
@@ -25,7 +30,6 @@ app.use(session({
 }))
 
 //请求体
-import bodyParser from 'body-parser'
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));

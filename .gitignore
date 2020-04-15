@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Editor directories and files
+.gitignore
 .idea
 .vscode
 *.suo
