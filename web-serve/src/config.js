@@ -9,4 +9,10 @@ export default {
 	port: 3000 ,	//监听的端口号
 	secret:'leavehao@foxmail.com',	//session
 	maxAge: 1000 * 60 * 60 * 6	,//session保存6个小时
+	email: {
+	        service: 'QQ',
+	        user: 'leavezzz@foxmail.com',
+	        pass: 'nlmbpzeggolzbdaa',
+	    }
+
 }

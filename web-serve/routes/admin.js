@@ -9,9 +9,9 @@ const S_KEY = 'leavehao@foxmail.com' //盐
 
 //管理员登录
 router.post('/login', async (req, res) => {
-	const adminName = req.body.adminName;
-	const adminPsw = md5(md5(req.body.adminPsw) + S_KEY);
-	const result = await Administrator.findOne({
+	let adminName = req.body.adminName;
+	let adminPsw = md5(md5(req.body.adminPsw) + S_KEY);
+	let result = await Administrator.findOne({
 		adminName
 	})
 	if (result) {
@@ -20,7 +20,6 @@ router.post('/login', async (req, res) => {
 			res.json({
 				status_code: 200,
 				message: '登录成功',
-				adminKey: result.adminKey
 			})
 		} else {
 			res.json({
@@ -36,23 +35,28 @@ router.post('/login', async (req, res) => {
 	}
 })
 
-//验证登录状态
-router.get('/isadmin',(req,res)=>{
-	if (!req.session.admin){
+//设置后台访问权限
+router.use((req, res, next) => {
+	if (!req.session.admin) {
 		res.json({
 			status_code: 400,
-			message: '请先登录'
-		})
-	}else{
-		res.json({
-			status_code: 200,
-			message: '进入管理员界面'
+			message: '无权访问'
 		})
 	}
+	next();
+})
+
+// 验证登录状态,若未被中间件拦截则为登录状态
+router.get('/isadmin', (req, res) => {
+	res.json({
+		status_code: 200,
+		message: '进入管理员界面',
+		adminName: req.session.admin
+	})
 })
 
 //退出登录
-router.get('/logout',(req,res)=>{
+router.get('/logout', (req, res) => {
 	req.session.admin = '';
 	res.json({
 		status_code: 200,

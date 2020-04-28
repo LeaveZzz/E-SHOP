@@ -4,8 +4,15 @@ import VueRouter from 'vue-router'
 const Home = () => import('views/home/Home')
 const UserLogin = () => import('views/userLogin/UserLogin')
 const UserRegister = () => import('views/userRegister/UserRegister')
+//管理员相关路由
 const AdminLogin = () => import('views/adminLogin/AdminLogin')
 const AdminHome = () => import('views/adminHome/AdminHome')
+const Welcome = () => import('views/adminHome/children/Welcome')
+const UserList = () => import('views/adminHome/children/UserList')
+const GoodsList = () => import('views/adminHome/children/GoodsList')
+const AddGoods = () => import('views/adminHome/children/AddGoods')
+const OrdersList = () => import('views/adminHome/children/OrdersList')
+const DataList = () => import('views/adminHome/children/DataList')
 
 const NotFound = () => import('views/notfound/NotFound')
 
@@ -23,19 +30,43 @@ const routes = [{
 		}
 	},
 	{
-		path: '/userLogin',
+		path: '/userlogin',
 		component: UserLogin
 	},
 	{
-		path: '/userRegister',
+		path: '/userreg',
 		component: UserRegister
 	},
 	{
-		path: '/adminLogin',
+		path: '/adminlogin',
 		component: AdminLogin
 	}, {
 		path: '/adminhome',
-		component: AdminHome
+		component: AdminHome,
+		redirect: '/adminhome/welcome',
+		children: [{
+			path: 'welcome',
+			component: Welcome
+		},{
+			path: 'users',
+			component: UserList
+		},
+		,{
+			path: 'goodslist',
+			component: GoodsList
+		},
+		,{
+			path: 'addgoods',
+			component: AddGoods
+		},
+		,{
+			path: 'orderslist',
+			component: OrdersList
+		},
+		,{
+			path: 'datalist',
+			component: DataList
+		}]
 	},
 	{
 		path: '/notfound',

@@ -2,19 +2,15 @@
 	<div class="header_nav">
 		<p>嗨~欢迎来到糕糕商城</p>
 		<ul>
-			<li>
-				<router-link to="/userLogin">您好,请登录</router-link>
-				<router-link to="/userRegister">免费注册</router-link>
+			<li v-if="$store.state.userName">
+				<a href="javascript:;">{{'欢迎您 , '+$store.state.userName}}</a>
+				<a href="javascript:;" @click="layout">退出登录</a>
 			</li>
-			<!-- 		<li v-else>
-			<a v-if="userInfo.user_nickname">您好,{{ userInfo.user_nickname }}</a>
-			<a v-else>您好,{{ userInfo.user_name | nameFormat }}</a>
-			<a>退出登录</a>
-		</li> -->
-			<!-- 		<li v-if="this.$route.path.indexOf('/home') === -1">
-			<router-link to="/home">返回首页</router-link>
-		</li> -->
-			<li v-if="this.$route.path.indexOf('/home') != -1">
+			<li v-if="!$store.state.userName">
+				<router-link to="/userlogin">您好,请登录</router-link>
+				<router-link to="/userreg">免费注册</router-link>
+			</li>
+			<li v-if="$route.path.indexOf('/home') == -1">
 				<router-link to="/home">返回首页</router-link>
 			</li>
 			<li><a>个人中心</a></li>
@@ -28,8 +24,16 @@
 
 <script>
 	import {
+		ADD_USER_NAME,
+		REMOVE_USER_NAME
+	} from 'store/mutation-types'
+	import {
 		isAdmin
 	} from 'network/admin'
+	import {
+		isUser,
+		userLogout
+	} from 'network/user'
 	export default {
 		name: 'HeaderNav',
 		data() {
@@ -37,16 +41,35 @@
 
 			}
 		},
+		async created() {
+			//判断用户是否为登录状态
+			let result = await isUser();
+			if (result.status_code !== 400) {
+				this.$store.commit(ADD_USER_NAME, {
+					userName: result.userName
+				});
+			}
+		},
 		methods: {
 			async goAdmin() {
 				//验证权限,若是登录状态则直接进入管理员界面,否则进入登录页面
-				const result = await isAdmin();
+				let result = await isAdmin();
 				if (result.status_code !== 400) {
 					return this.$router.push('/adminhome')
 				} else {
 					this.$router.push('/adminlogin');
 				}
-			}
+			},
+			//退出登录
+			async layout() {
+				let result = await userLogout();
+				this.$message({
+					showClose: true,
+					message: result.message,
+					type: 'info'
+				});
+				this.$store.commit(REMOVE_USER_NAME);
+			},
 		}
 	}
 </script>
