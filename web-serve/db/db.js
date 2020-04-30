@@ -25,9 +25,9 @@ const userSchema = new mongoose.Schema({
 	userPhone:String,
 	userSex:String,
 	userAdress:String,
-	userBirthday:String,
 	userSign:String,
 	userAvatar:String,
+	nickName:String
 })
 export const User = mongoose.model('User',userSchema)
 
@@ -45,7 +45,6 @@ export const User = mongoose.model('User',userSchema)
 // 			userPhone:regFrom.userPhone,
 // 			userSex:regFrom.userSex,
 // 			userAdress:regFrom.userAdress,
-// 			userBirthday:regFrom.userAdress,
 // 			userSign:regFrom.userSign,
 // 			userAvatar:regFrom.userAvatar,
 // 		},(err,doc)=>{

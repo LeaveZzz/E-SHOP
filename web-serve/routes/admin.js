@@ -1,7 +1,11 @@
 import express from 'express'
+import path from 'path'
 import md5 from 'blueimp-md5'
+import formidable from 'formidable'
+import config from '../src/config.js'
 import {
-	Administrator
+	Administrator,
+	User
 } from '../db/db'
 const router = express.Router();
 
@@ -35,6 +39,8 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+
+
 //设置后台访问权限
 router.use((req, res, next) => {
 	if (!req.session.admin) {
@@ -62,6 +68,119 @@ router.get('/logout', (req, res) => {
 		status_code: 200,
 		message: '已退出登录'
 	})
+})
+
+//获取用户列表
+router.get('/userlist', async (req, res) => {
+	let result;
+	if(req.query.userName){
+		result = await User.find({userName:{$regex:req.query.userName, $options:'gi'}});
+	}else{
+		result = await User.find({});
+	}
+	res.json({
+		status_code: 200,
+		message: '获取用户列表成功',
+		total: result.length,
+		users: result
+	})
+})
+
+//添加用户
+router.post('/adduser', (req, res) => {
+	const form = new formidable.IncomingForm();
+	form.uploadDir = config.uploadsAvatarPath; // 上传图片放置的文件夹
+	form.keepExtensions = true; // 保持文件的原始扩展名
+	form.parse(req, (err, fields, files) => {
+		let avatar;
+		if (fields.userSex == '男') {
+			avatar = 'http://localhost:' + config.port + '/boy_avatar.svg'
+		} else {
+			avatar = 'http://localhost:' + config.port + '/girl_avatar.svg'
+		}
+		if (files.userAvatar) {
+			avatar = 'http://localhost:' + config.port + '/avatar_uploads/' + path.basename(files.userAvatar.path);
+		}
+		let userInfo = {
+			userName: fields.userName,
+			password: md5(md5(fields.userPsw) + S_KEY), //加密密码
+			userEmail: fields.userEmail,
+			userPhone: fields.userPhone,
+			userSex: fields.userSex,
+			userSign: fields.userSign,
+			userAdress: fields.userAdress,
+			nickName: fields.nickName,
+			// userAdress:fields.userAdress.replace(/,/g,''),
+			userAvatar: avatar
+		}
+		User.create(userInfo, (err, doc) => {
+			console.log(err, doc)
+			if (!err) {
+				res.json({
+					status_code: 200,
+					message: '添加用户成功',
+				})
+			} else {
+				res.json({
+					status_code: 400,
+					message: '内部错误,添加用户失败',
+				})
+			}
+		})
+	})
+})
+
+//编辑用户
+router.post('/edituser', (req, res) => {
+	const form = new formidable.IncomingForm();
+	form.uploadDir = config.uploadsAvatarPath; // 上传图片放置的文件夹
+	form.keepExtensions = true; // 保持文件的原始扩展名
+	form.parse(req, (err, fields, files) => {
+		let avatar;
+		let userInfo = {
+			userName: fields.userName,
+			userEmail: fields.userEmail,
+			userPhone: fields.userPhone,
+			userSex: fields.userSex,
+			userSign: fields.userSign,
+			userAdress: fields.userAdress,
+			nickName: fields.nickName
+		}
+		if (files.userAvatar) {
+			avatar = 'http://localhost:' + config.port + '/avatar_uploads/' + path.basename(files.userAvatar.path);
+			userInfo.userAvatar = avatar
+		}
+		if (fields.userPsw) {
+			userInfo.password = md5(md5(fields.userPsw) + S_KEY);	//加密密码
+		}
+		User.updateOne({userName:fields.userName},userInfo).then((doc)=>{
+			res.json({
+				status_code: 200,
+				message: '修改用户成功',
+			})
+		}).catch((err)=>{
+			res.json({
+				status_code: 400,
+				message: '内部错误,修改用户信息失败',
+			})
+		})
+	})
+})
+
+//删除用户
+router.get('/deleteuser', (req, res) => {
+	let userName = req.query.userName;
+	User.findOneAndDelete({userName}).then((doc)=>{
+			res.json({
+				status_code: 200,
+				message: '删除用户成功',
+			})
+		}).catch((err)=>{
+			res.json({
+				status_code: 400,
+				message: '内部错误,删除用户失败',
+			})
+		})
 })
 
 export default router;

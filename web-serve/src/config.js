@@ -1,6 +1,8 @@
 const path = require('path')
 export default {
 	publicPath: path.join(__dirname, '../public'),	//静态资源路径
+	uploadsGoodsPath: path.join(__dirname, '../public/uploads'), // 上传的图片所放置的文件夹
+	uploadsAvatarPath: path.join(__dirname, '../public/avatar_uploads'), // 上传的头像所放置的文件夹
 	host: 'localhost:27017',	//数据库地址
 	user: '',	//数据库账号
 	password:'',	//数据库密码

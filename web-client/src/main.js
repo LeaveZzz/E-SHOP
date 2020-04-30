@@ -10,6 +10,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
 
+//省市区联动
+import VueAreaLinkage from 'vue-area-linkage';
+import 'vue-area-linkage/dist/index.css';
+Vue.use(VueAreaLinkage);
+
 //引入图标库
 import 'assets/fonts/iconfont.css'
 

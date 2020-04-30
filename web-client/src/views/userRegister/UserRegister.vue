@@ -3,8 +3,8 @@
 		<div class="register_box">
 			<!-- logo盒子 -->
 			<div class="logo_box">
-				<img src="../../assets/img/boy_avatar.svg" v-if="choiceSex" alt="">
-				<img src="../../assets/img/girl_avatar.svg" v-else alt="">
+				<img src="~assets/img/boy_avatar.svg" v-if="choiceSex" alt="">
+				<img src="~assets/img/girl_avatar.svg" v-else alt="">
 			</div>
 			<!-- 返回首页 -->
 			<el-button type="text" icon="el-icon-arrow-left" class="backBtn" @click="goHome">返回首页</el-button>
@@ -136,9 +136,9 @@
 					userPhone: '',
 					userSex: '男',
 					userAdress: '',
-					userBirthday: '',
 					userSign: '',
-					userAvatar: 'https://raw.githubusercontent.com/leavehao/picturebed/master/shopMall/boy_avatar.svg',
+					userAvatar: 'http://localhost:3000/boy_avatar.svg',
+					nickName:''
 				},
 				userRegister_formRules: {
 					userName: [{
@@ -182,12 +182,12 @@
 				if (sex === '男') {
 					this.choiceSex = true;
 					this.userRegister_form.userAvatar =
-						'https://raw.githubusercontent.com/leavehao/picturebed/master/shopMall/boy_avatar.svg';
+						'http://localhost:3000/boy_avatar.svg';
 					this.userRegister_form.userSex = '男'
 				} else {
 					this.choiceSex = false;
 					this.userRegister_form.userAvatar =
-						'https://raw.githubusercontent.com/leavehao/picturebed/master/shopMall/girl_avatar.svg';
+						'http://localhost:3000/girl_avatar.svg';
 					this.userRegister_form.userSex = '女'
 				}
 			},

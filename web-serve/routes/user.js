@@ -74,9 +74,9 @@ router.post('/register', async (req, res) => {
 			userPhone: regFrom.userPhone,
 			userSex: regFrom.userSex,
 			userAdress: regFrom.userAdress,
-			userBirthday: regFrom.userAdress,
 			userSign: regFrom.userSign,
 			userAvatar: regFrom.userAvatar,
+			nickName: regFrom.nickName
 		}, (err, doc) => {
 			console.log(err, doc)
 			if (!err) {
@@ -107,7 +107,7 @@ router.post('/login', async (req, res) => {
 		userName
 	})
 	let resultEmail = await User.findOne({
-		userEmail:userName
+		userEmail: userName
 	})
 	if (resultName || resultEmail) {
 		if (resultName) {
@@ -148,17 +148,20 @@ router.post('/login', async (req, res) => {
 })
 
 //验证是否是用户
-router.get('/isuser',(req, res) => {
+router.get('/isuser', async (req, res) => {
 	if (!req.session.user) {
 		res.json({
 			status_code: 400,
 			message: '未登录'
 		})
-	}else{
+	} else {
+		let result = await User.findOne({
+			userName: req.session.user
+		})
 		res.json({
 			status_code: 200,
 			message: '登录状态',
-			userName: req.session.user
+			userName: result.nickName || req.session.user
 		})
 	}
 })

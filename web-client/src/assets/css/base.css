@@ -3,22 +3,81 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 html,
 body,
-#app{
+#app {
 	height: 100%;
-	user-select: none;/* 禁止用户鼠标在页面上选中文字/图片等 */
+	user-select: none;
+	/* 禁止用户鼠标在页面上选中文字/图片等 */
 }
 
-.el-breadcrumb{
+.el-breadcrumb {
 	margin-bottom: 20px;
 }
 
-.el-card{
-	box-shadow: 0 1px 1px rgba(0,0,0,0.15)!important;
+.el-card {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.el-table {
+	margin-top: 15px;
+}
+
+.el-pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.demo-table-expand {
+	font-size: 0;
+}
+
+.demo-table-expand label {
+	width: 90px;
+	color: #99a9bf;
+}
+
+.demo-table-expand .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+
+.avatar-uploader .el-upload {
+	border: 1px dashed #d9d9d9;
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+	border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+	font-size: 28px;
+	color: #8c939d;
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+}
+
+.avatar {
+	width: 80px;
+	height: 80px;
+	display: block;
+}
+
+.area-select.large{
+	height: 40px;
+	line-height: 25px;
+	width: 100%;
 }
