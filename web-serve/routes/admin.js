@@ -183,4 +183,105 @@ router.get('/deleteuser', (req, res) => {
 		})
 })
 
+//获取管理员列表
+router.get('/adminlist', async (req, res) => {
+	let result;
+	if(req.query.adminName){
+		result = await Administrator.find({adminName:{$regex:req.query.adminName, $options:'gi'}});
+	}else{
+		result = await Administrator.find({});
+	}
+	res.json({
+		status_code: 200,
+		message: '获取管理员列表成功',
+		total: result.length,
+		administrators: result
+	})
+})
+
+//添加管理员
+router.post('/addadmin', (req, res) => {
+		let regFrom = req.body;
+		console.log(regFrom)
+		let adminInfo = {
+			adminName : regFrom.adminName,
+			password : md5(md5(regFrom.adminPsw) + S_KEY), //加密密码
+			role: regFrom.adminRole
+		}
+		Administrator.create(adminInfo, (err, doc) => {
+			console.log(err, doc)
+			if (!err) {
+				res.json({
+					status_code: 200,
+					message: '添加管理员成功',
+				})
+			} else {
+				res.json({
+					status_code: 400,
+					message: '内部错误,添加管理员失败',
+				})
+			}
+		})
+})
+
+//检查管理员名是否已注册
+router.get('/checkname', async (req, res) => {
+	let adminName = req.query.adminName;
+	let isNameReg = await Administrator.findOne({
+		adminName
+	})
+	if (isNameReg) {
+		res.json({
+			status_code: 400,
+			message: '该名称已注册'
+		})
+	} else {
+		res.json({
+			status_code: 200,
+			message: '该名称可以使用'
+		})
+	}
+})
+
+//编辑管理员
+router.post('/editadmin',async (req, res) => {
+	let regFrom = req.body;
+	console.log(regFrom);
+	let adminInfo = {
+		adminName : regFrom.adminName,
+		role: regFrom.adminRole
+	}
+	if (regFrom.adminPsw) {
+		adminInfo.password = md5(md5(regFrom.adminPsw) + S_KEY); //加密密码
+	}
+	console.log(adminInfo)
+	Administrator.updateOne({adminName:regFrom.adminName},adminInfo).then((doc)=>{
+		res.json({
+			status_code: 200,
+			message: '修改管理员信息成功',
+		})
+	}).catch((err)=>{
+		res.json({
+			status_code: 400,
+			message: '内部错误,修改管理员信息失败',
+		})
+	})
+})
+
+//删除管理员
+router.get('/deleteadmin', (req, res) => {
+	let adminName = req.query.adminName;
+	Administrator.findOneAndDelete({adminName}).then((doc)=>{
+			res.json({
+				status_code: 200,
+				message: '删除管理员成功',
+			})
+		}).catch((err)=>{
+			res.json({
+				status_code: 400,
+				message: '内部错误,删除管理员失败',
+			})
+		})
+})
+
 export default router;

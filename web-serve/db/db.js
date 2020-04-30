@@ -13,7 +13,8 @@ mongoose.connect(dbURL, {
 //设置管理员账号规则
 const adminSchema = new mongoose.Schema({
 	adminName:String,
-	password:String
+	password:String,
+	role:String
 })
 export const Administrator = mongoose.model('Administrator',adminSchema)
 
@@ -32,8 +33,9 @@ const userSchema = new mongoose.Schema({
 export const User = mongoose.model('User',userSchema)
 
 // Administrator.create({
-// 	adminName:'Leo',
-// 	password:'980408'
+// 	adminName:'leaveHao',
+// 	password:'a467faacecebb65bfff36d26b4d3a469',
+// 	role:'普通管理员'
 // },(err,doc)=>{
 // 	console.log(err,doc)
 // })

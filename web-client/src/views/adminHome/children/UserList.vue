@@ -69,7 +69,7 @@
 			</el-pagination>
 		</el-card>
 		<!-- 添加用户的对话框 -->
-		<el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%">
+		<el-dialog title="添加用户" :visible.sync="addDialogVisible" @close="resetAddForm" width="50%">
 			<el-form :model="addUser_form" :rules="addUser_rules" ref="addUser_form" label-width="70px">
 				<!-- 用户名 -->
 				<el-form-item label="用户名" prop="userName">
@@ -502,8 +502,8 @@
 							message: result.message,
 							type: 'success'
 						});
+						this.getUsers();
 					}
-					this.getUsers();
 				}).catch(() => {
 					this.$message({
 						type: 'info',
@@ -571,7 +571,6 @@
 					} else {
 						this.getUsers();
 					}
-
 				})
 			},
 			//关闭编辑对话框

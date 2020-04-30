@@ -58,3 +58,45 @@ export function deleteUser(params) {
 		params
 	})
 }
+
+//获取管理员列表
+export function getAdminList(params) {
+	return request({
+		url: '/admin/adminlist',
+		params
+	})
+}
+
+//添加管理员列表
+export function addAdmin(data) {
+	return request({
+		url: '/admin/addadmin',
+		method: 'post',
+		data
+	})
+}
+
+//检查管理员是否已注册
+export function checkName(params) {
+	return request({
+		url: '/admin/checkname',
+		params
+	})
+}
+
+//编辑管理员
+export function editAdmin(data) {
+	return request({
+		url: '/admin/editadmin',
+		method: 'post',
+		data
+	})
+}
+
+//删除用户
+export function deleteAdmin(params) {
+	return request({
+		url: '/admin/deleteadmin',
+		params
+	})
+}

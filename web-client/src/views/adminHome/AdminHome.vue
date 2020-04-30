@@ -14,7 +14,8 @@
 		<el-container>
 			<el-aside :width="isCollapse ? '56px' : '200px' ">
 				<div class="toggle_btn" @click="toggleCollapse">| | |</div>
-				<el-menu background-color="#323744" text-color="#FFF" active-text-color="#409EFF" router :default-active="$route.path" unique-opened :collapse="isCollapse" :collapse-transition="false">
+				<el-menu background-color="#323744" text-color="#FFF" active-text-color="#409EFF" router :default-active="$route.path"
+				 unique-opened :collapse="isCollapse" :collapse-transition="false">
 					<!-- 一级菜单 用户管理 -->
 					<el-submenu index="1">
 						<!-- 模板 -->
@@ -30,9 +31,25 @@
 							</template>
 						</el-menu-item>
 					</el-submenu>
-
-					<!-- 一级菜单 商品管理-->
+					
+					<!-- 一级菜单 权限管理 -->
 					<el-submenu index="2">
+						<!-- 模板 -->
+						<template slot="title">
+							<i class="iconfont icon-tijikongjian"></i>
+							<span>权限管理</span>
+						</template>
+						<!-- 二级菜单 -->
+						<el-menu-item index="/adminhome/administrators">
+							<template slot="title">
+								<i class="el-icon-menu"></i>
+								<span>管理员列表</span>
+							</template>
+						</el-menu-item>
+					</el-submenu>
+					
+					<!-- 一级菜单 商品管理-->
+					<el-submenu index="3">
 						<template slot="title">
 							<i class="iconfont icon-shangpin"></i>
 							<span>商品管理</span>
@@ -52,7 +69,7 @@
 					</el-submenu>
 
 					<!-- 一级菜单 订单管理-->
-					<el-submenu index="3">
+					<el-submenu index="4">
 						<template slot="title">
 							<i class="iconfont icon-danju"></i>
 							<span>订单管理</span>
@@ -66,7 +83,7 @@
 					</el-submenu>
 
 					<!-- 一级菜单 数据统计-->
-					<el-submenu index="4">
+					<el-submenu index="5">
 						<template slot="title">
 							<i class="iconfont icon-baobiao"></i>
 							<span>数据统计</span>
@@ -88,7 +105,9 @@
 </template>
 
 <script>
-	import {ADD_ADMIN_NAME} from 'store/mutation-types'
+	import {
+		ADD_ADMIN_NAME
+	} from 'store/mutation-types'
 	import {
 		isAdmin,
 		adminLogout
@@ -112,7 +131,9 @@
 				});
 				return this.$router.replace('/adminlogin')
 			}
-			this.$store.commit(ADD_ADMIN_NAME,{adminName:result.adminName});
+			this.$store.commit(ADD_ADMIN_NAME, {
+				adminName: result.adminName
+			});
 		},
 		methods: {
 			//退出登录
@@ -130,7 +151,7 @@
 				this.$router.replace('/home')
 			},
 			//菜单栏伸缩
-			toggleCollapse(){
+			toggleCollapse() {
 				this.isCollapse = !this.isCollapse
 			}
 		}
@@ -186,8 +207,8 @@
 	.iconfont {
 		margin-right: 10px;
 	}
-	
-	.toggle_btn{
+
+	.toggle_btn {
 		text-align: center;
 		line-height: 24px;
 		color: #fff;

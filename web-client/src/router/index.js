@@ -9,6 +9,7 @@ const AdminLogin = () => import('views/adminLogin/AdminLogin')
 const AdminHome = () => import('views/adminHome/AdminHome')
 const Welcome = () => import('views/adminHome/children/Welcome')
 const UserList = () => import('views/adminHome/children/UserList')
+const AdminList = () => import('views/adminHome/children/AdminList')
 const GoodsList = () => import('views/adminHome/children/GoodsList')
 const AddGoods = () => import('views/adminHome/children/AddGoods')
 const OrdersList = () => import('views/adminHome/children/OrdersList')
@@ -50,7 +51,10 @@ const routes = [{
 		},{
 			path: 'users',
 			component: UserList
-		},
+		},{
+			path: 'administrators',
+			component: AdminList
+		}
 		,{
 			path: 'goodslist',
 			component: GoodsList

@@ -65,7 +65,7 @@ router.get('/checkemail', async (req, res) => {
 //注册用户
 router.post('/register', async (req, res) => {
 	let regFrom = req.body;
-	console.log(regFrom, req.session.confirmMes);
+	// console.log(regFrom, req.session.confirmMes);
 	if (regFrom.confirmMes === req.session.confirmMes) {
 		User.create({
 			userName: regFrom.userName,
