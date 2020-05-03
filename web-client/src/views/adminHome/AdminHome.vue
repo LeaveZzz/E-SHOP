@@ -5,7 +5,7 @@
 			<h3>糕糕商城</h3>
 			<h4>欢迎来到后台管理界面</h4>
 			<div>
-				<p>管理员: {{$store.state.adminName}}</p>
+				<p>{{role}}: {{$store.state.adminName}}</p>
 				<el-button type="info" @click="goHome">返回商城</el-button>
 				<el-button type="info" @click="logout">退出登录</el-button>
 			</div>
@@ -60,10 +60,10 @@
 								<span>商品列表</span>
 							</template>
 						</el-menu-item>
-						<el-menu-item index="/adminhome/addgoods">
+						<el-menu-item index="/adminhome/categorylist">
 							<template slot="title">
 								<i class="el-icon-menu"></i>
-								<span>商品上架</span>
+								<span>商品分类</span>
 							</template>
 						</el-menu-item>
 					</el-submenu>
@@ -116,6 +116,7 @@
 		name: 'AdminHome',
 		data() {
 			return {
+				role:'',
 				adminName: '',
 				isCollapse: false
 			}
@@ -131,6 +132,7 @@
 				});
 				return this.$router.replace('/adminlogin')
 			}
+			this.role = result.role
 			this.$store.commit(ADD_ADMIN_NAME, {
 				adminName: result.adminName
 			});

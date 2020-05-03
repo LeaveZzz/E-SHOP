@@ -1,5 +1,6 @@
 <template>
 	<div id="">
+		<!-- 面包屑导航 -->
 		<el-breadcrumb separator="/">
 			<el-breadcrumb-item :to="{ path: '/adminhome' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>权限管理</el-breadcrumb-item>
@@ -36,7 +37,6 @@
 			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pagenum"
 			 :page-sizes="[2, 5, 10, 15]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 			</el-pagination>
-		</el-card>
 		</el-card>
 		<!-- 添加管理员的对话框 -->
 		<el-dialog title="添加管理员" :visible.sync="addDialogVisible" @close="resetAddForm" width="50%">
@@ -352,7 +352,7 @@
 							return;
 						}
 					}
-				this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+				this.$confirm('此操作将永久删除该管理员账户, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
