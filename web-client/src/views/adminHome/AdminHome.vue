@@ -74,7 +74,7 @@
 							<i class="iconfont icon-danju"></i>
 							<span>订单管理</span>
 						</template>
-						<el-menu-item index="/adminhome/orderslist">
+						<el-menu-item index="/adminhome/orderlist">
 							<template slot="title">
 								<i class="el-icon-menu"></i>
 								<span>订单列表</span>

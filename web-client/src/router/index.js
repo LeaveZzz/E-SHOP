@@ -12,7 +12,7 @@ const UserList = () => import('views/adminHome/children/UserList')
 const AdminList = () => import('views/adminHome/children/AdminList')
 const GoodsList = () => import('views/adminHome/children/GoodsList')
 const CategoryList = () => import('views/adminHome/children/CategoryList')
-const OrdersList = () => import('views/adminHome/children/OrdersList')
+const OrderList = () => import('views/adminHome/children/OrderList')
 const DataList = () => import('views/adminHome/children/DataList')
 
 const NotFound = () => import('views/notfound/NotFound')
@@ -61,8 +61,8 @@ const routes = [{
 			path: 'categorylist',
 			component: CategoryList
 		}, , {
-			path: 'orderslist',
-			component: OrdersList
+			path: 'orderlist',
+			component: OrderList
 		}, , {
 			path: 'datalist',
 			component: DataList

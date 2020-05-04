@@ -224,7 +224,7 @@
 			closeEdit(){
 				this.$refs.editCate_form.resetFields();
 			},
-			//展示编辑管理员的对话框
+			//展示编辑分类的对话框
 			async showEditDialogVisible(id) {
 				this.editDialogVisible = true;
 				let result = await getCateList({cateId: id})

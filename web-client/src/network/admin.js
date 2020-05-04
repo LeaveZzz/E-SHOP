@@ -200,3 +200,28 @@ export function deleteGoods(params) {
 		params
 	})
 }
+
+//获取订单列表
+export function getOrderList(params) {
+	return request({
+		url: '/admin/orderlist',
+		params
+	})
+}
+
+//编辑订单信息
+export function editOrder(data) {
+	return request({
+		url: '/admin/editorder',
+		method: 'post',
+		data
+	})
+}
+
+//删除订单
+export function deleteOrder(params) {
+	return request({
+		url: '/admin/deleteorder',
+		params
+	})
+}

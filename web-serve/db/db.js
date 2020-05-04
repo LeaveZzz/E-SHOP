@@ -36,7 +36,7 @@ export const User = mongoose.model('User', userSchema)
 const categorySchema = new mongoose.Schema({
 	cateId: String,
 	cateName: String,
-	//此分类商品数量
+	//此分类下商品总数量
 	cateCounts: Number
 })
 export const Category = mongoose.model('Category', categorySchema)
@@ -55,7 +55,7 @@ const goodsSchema = new mongoose.Schema({
 	goodsCategory: String,
 	goodsCounts: Number,
 	//评论条数
-	goodsComments: Number
+	goodsComments: Number,
 })
 export const Goods = mongoose.model('Goods', goodsSchema)
 
@@ -64,9 +64,25 @@ const commentSchema = new mongoose.Schema({
 	goodsId: String,
 	userName: String,
 	commentDetail: String,
-	comnentRating : Number
+	comnentRating: Number
 })
 export const Comment = mongoose.model('Comment', commentSchema)
+
+//设置订单规则
+const orderSchema = new mongoose.Schema({
+	goodsId: String,
+	goodsName: String,
+	userName: String,
+	userAdress: String,
+	userPhone: String,
+	goodsSize: String,
+	goodsCounts: String,
+	totalPrice: String,
+	orderTime: Number,
+	isSuccess: Boolean,
+	userNote: String
+})
+export const Order = mongoose.model('Order', orderSchema)
 
 // Administrator.create({
 // 	adminName:'leaveHao',
@@ -113,10 +129,25 @@ export const Comment = mongoose.model('Comment', commentSchema)
 // })
 
 // Comment.create({
-// 	goodsId: '136590526',
+// 	goodsId: '6666',
 // 	userName: '测试机器人1',
 // 	commentDetail: '非常不错！',
 // 	comnentRating : 5
+// },(err,doc)=>{
+// 	console.log(err,doc)
+// })
+
+// Order.create({
+// 	goodsId: '136590526',
+// 	goodsName: '【花花公子正品】皮带男士休闲自动扣皮带商务百搭自动扣学生腰带',
+// 	userName: '测试机器人2',
+// 	userAdress: '天津市,市辖区,河北区',
+// 	userPhone: '13866660666',
+// goodsSize: String,
+// 	goodsCounts: '1',
+// 	totalPrice: '990',
+// 	orderTime: new Date().getTime(),
+// 	isSuccess: false
 // },(err,doc)=>{
 // 	console.log(err,doc)
 // })

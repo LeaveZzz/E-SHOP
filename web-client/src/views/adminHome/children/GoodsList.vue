@@ -11,7 +11,7 @@
 			<!-- 商品搜索及添加 -->
 			<el-row :gutter="25">
 				<el-col :span="15">
-					<el-input placeholder="请输入商品Id或商品名称" v-model="goodsId" class="input-with-select">
+					<el-input placeholder="请输入商品ID或商品名称" v-model="goodsId" class="input-with-select">
 						<el-select v-model="goodsCategory" slot="prepend" clearable placeholder="选择商品分类" style="width: 180px;">
 							<el-option v-for="item in cateList" :key="item.cateId" :label="item.cateName" :value="item.cateId">
 							</el-option>

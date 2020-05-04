@@ -1,4 +1,5 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import path from 'path'
 import md5 from 'blueimp-md5'
 import formidable from 'formidable'
@@ -8,7 +9,8 @@ import {
 	User,
 	Category,
 	Goods,
-	Comment
+	Comment,
+	Order
 } from '../db/db'
 const router = express.Router();
 
@@ -54,7 +56,7 @@ router.use((req, res, next) => {
 })
 
 // 验证登录状态,若未被中间件拦截则为登录状态
-router.get('/isadmin',async (req, res) => {
+router.get('/isadmin', async (req, res) => {
 	let result = await Administrator.findOne({
 		adminName: req.session.admin
 	})
@@ -396,11 +398,11 @@ router.post('/addcate', (req, res) => {
 
 //编辑分类
 router.post('/editcate', async (req, res) => {
-	let regFrom = req.body;
-	console.log(regFrom);
+	let editFrom = req.body;
+	console.log(editFrom);
 	Category.updateOne({
-		cateId: regFrom.cateId
-	}, regFrom).then((doc) => {
+		cateId: editFrom.cateId
+	}, editFrom).then((doc) => {
 		res.json({
 			status_code: 200,
 			message: '修改分类信息成功',
@@ -418,11 +420,21 @@ router.get('/deletecate', (req, res) => {
 	let cateId = req.query.cateId;
 	Category.findOneAndDelete({
 		cateId
-	}).then((doc) => {
-		//删除分类下所有商品
-		Goods.deleteMany({
+	}).then(async (doc) => {
+		//删除商品下评论
+		let result = await Goods.find({
 			goodsCategory: cateId
-		}).then(doc => console.log(doc))
+		})
+		console.log('result', result)
+		for (let i = 0; i < result.length; i++) {
+			await Comment.deleteMany({
+				goodsId: result[i].goodsId
+			})
+		}
+		//删除分类下所有商品
+		await Goods.deleteMany({
+			goodsCategory: cateId
+		})
 		res.json({
 			status_code: 200,
 			message: '删除分类成功',
@@ -443,40 +455,38 @@ router.get('/goodslist', async (req, res) => {
 			let resultId = await Goods.find({
 				goodsId: req.query.goodsId,
 				goodsCategory: req.query.goodsCategory
-			});
+			}).sort('cateId');
 			let resultName = await Goods.find({
 				goodsName: {
 					$regex: req.query.goodsId,
 					$options: 'gi'
 				},
 				goodsCategory: req.query.goodsCategory
-			});
+			}).sort('cateId');
 			if (resultId.length != 0) {
 				result = resultId
 			} else {
-				console.log(2)
 				result = resultName
 			}
 		} else {
 			result = await Goods.find({
 				goodsCategory: req.query.goodsCategory
-			});
+			}).sort('cateId');
 		}
 	} else {
 		if (req.query.goodsId) {
 			let resultId = await Goods.find({
 				goodsId: req.query.goodsId
-			});
+			}).sort('cateId');
 			let resultName = await Goods.find({
 				goodsName: {
 					$regex: req.query.goodsId,
 					$options: 'gi'
 				}
-			});
+			}).sort('cateId');
 			if (resultId.length != 0) {
 				result = resultId
 			} else {
-				console.log(2)
 				result = resultName
 			}
 		} else {
@@ -650,6 +660,77 @@ router.get('/deletegoods', (req, res) => {
 		res.json({
 			status_code: 400,
 			message: '内部错误,删除商品失败',
+		})
+	})
+})
+
+/**************************************** 订单管理 *******************************************/
+
+//获取订单列表
+router.get('/orderlist', async (req, res) => {
+	let result;
+	if (req.query.userName) {
+		let resultId = [];
+		if (req.query.userName.length == 24) {
+			resultId = await Order.find({
+				_id: mongoose.Types.ObjectId(req.query.userName)
+			}).sort('-orderTime');
+		}
+		let resultName = await Order.find({
+			userName: {
+				$regex: req.query.userName,
+				$options: 'gi'
+			}
+		}).sort('-orderTime');
+		if (resultId.length != 0) {
+			result = resultId
+		} else {
+			result = resultName
+		}
+	} else {
+		result = await Order.find({}).sort('-orderTime');
+	}
+	res.json({
+		status_code: 200,
+		message: '获取订单列表成功',
+		total: result.length,
+		orders: result
+	})
+})
+
+//编辑订单信息
+router.post('/editorder', async (req, res) => {
+	let editFrom = req.body;
+	console.log(editFrom);
+	Order.updateOne({
+		_id: mongoose.Types.ObjectId(editFrom._id)
+	}, editFrom).then((doc) => {
+		res.json({
+			status_code: 200,
+			message: '修改订单信息成功',
+		})
+	}).catch((err) => {
+		console.log(err)
+		res.json({
+			status_code: 400,
+			message: '内部错误,修改订单信息失败',
+		})
+	})
+})
+
+//删除订单
+router.get('/deleteorder', (req, res) => {
+	Order.findOneAndDelete({
+		_id: mongoose.Types.ObjectId(req.query._id)
+	}).then((doc) => {
+		res.json({
+			status_code: 200,
+			message: '删除订单成功',
+		})
+	}).catch((err) => {
+		res.json({
+			status_code: 400,
+			message: '内部错误,删除订单失败',
 		})
 	})
 })
