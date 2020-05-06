@@ -21,6 +21,9 @@ import 'assets/fonts/iconfont.css'
 //引入全局样式
 import 'assets/css/base.css'
 
+//事件总线
+Vue.prototype.$bus = new Vue();
+
 new Vue({
     router,
     store,

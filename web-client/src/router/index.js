@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 const Home = () => import('views/home/Home')
 const UserLogin = () => import('views/userLogin/UserLogin')
 const UserRegister = () => import('views/userRegister/UserRegister')
+const SearchGoods = () => import('views/searchGoods/SearchGoods')
+const GoodsDetail = () => import('views/goodsDetail/GoodsDetail')
+const Cart = () => import('views/cart/Cart')
 //管理员相关路由
 const AdminLogin = () => import('views/adminLogin/AdminLogin')
 const AdminHome = () => import('views/adminHome/AdminHome')
@@ -27,7 +30,8 @@ const routes = [{
 		path: '/home',
 		component: Home,
 		meta: {
-			showHeaderTop: true
+			showHeaderTop: true,
+			showHeaderSearch: true
 		}
 	},
 	{
@@ -67,6 +71,26 @@ const routes = [{
 			path: 'datalist',
 			component: DataList
 		}]
+	},
+	{
+		path: '/searchgoods',
+		component: SearchGoods,
+		meta: {
+			showHeaderTop: true,
+			showHeaderSearch: true
+		}
+	},
+	{
+		path: '/goodsdetail',
+		component: GoodsDetail,
+		meta: {
+			showHeaderTop: true,
+		}
+	},
+	{
+	  path: '/cart',
+	  component: Cart,
+	  meta: {showHeaderTop: true}
 	},
 	{
 		path: '/notfound',

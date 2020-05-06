@@ -16,5 +16,4 @@ export default {
 	        user: 'leavezzz@foxmail.com',
 	        pass: 'nlmbpzeggolzbdaa',
 	    }
-
 }

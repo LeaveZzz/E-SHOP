@@ -225,3 +225,10 @@ export function deleteOrder(params) {
 		params
 	})
 }
+
+//获取数据列表
+export function getDataList() {
+	return request({
+		url: '/admin/datalist',
+	})
+}

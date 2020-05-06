@@ -10,6 +10,7 @@
     "area-data": "^5.0.6",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "echarts": "^4.7.0",
     "element-ui": "^2.13.0",
     "vue": "^2.6.11",
     "vue-area-linkage": "^5.1.0",

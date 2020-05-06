@@ -321,9 +321,9 @@ router.get('/catelist', async (req, res) => {
 	if (req.query.cateId) {
 		result = await Category.find({
 			cateId: req.query.cateId
-		});
+		}).sort('cateId');
 	} else {
-		result = await Category.find({});
+		result = await Category.find({}).sort('cateId');
 	}
 	res.json({
 		status_code: 200,
@@ -378,7 +378,8 @@ router.post('/addcate', (req, res) => {
 	let cateInfo = {
 		cateId: regFrom.cateId,
 		cateName: regFrom.cateName,
-		cateCounts: 0
+		cateCounts: 0,
+		cateSales: 0
 	}
 	Category.create(cateInfo, (err, doc) => {
 		console.log(err, doc)
@@ -399,19 +400,10 @@ router.post('/addcate', (req, res) => {
 //编辑分类
 router.post('/editcate', async (req, res) => {
 	let editFrom = req.body;
-	console.log(editFrom);
-	Category.updateOne({
-		cateId: editFrom.cateId
-	}, editFrom).then((doc) => {
-		res.json({
-			status_code: 200,
-			message: '修改分类信息成功',
-		})
+	Category.updateOne({cateId: editFrom.cateId}, editFrom).then((doc) => {
+		res.json({status_code: 200,message: '修改分类信息成功',})
 	}).catch((err) => {
-		res.json({
-			status_code: 400,
-			message: '内部错误,修改分类信息失败',
-		})
+		res.json({status_code: 400,message: '内部错误,修改分类信息失败',})
 	})
 })
 
@@ -455,14 +447,14 @@ router.get('/goodslist', async (req, res) => {
 			let resultId = await Goods.find({
 				goodsId: req.query.goodsId,
 				goodsCategory: req.query.goodsCategory
-			}).sort('cateId');
+			}).sort('goodsCategory');
 			let resultName = await Goods.find({
 				goodsName: {
 					$regex: req.query.goodsId,
 					$options: 'gi'
 				},
 				goodsCategory: req.query.goodsCategory
-			}).sort('cateId');
+			}).sort('goodsCategory');
 			if (resultId.length != 0) {
 				result = resultId
 			} else {
@@ -471,26 +463,26 @@ router.get('/goodslist', async (req, res) => {
 		} else {
 			result = await Goods.find({
 				goodsCategory: req.query.goodsCategory
-			}).sort('cateId');
+			}).sort('goodsCategory');
 		}
 	} else {
 		if (req.query.goodsId) {
 			let resultId = await Goods.find({
 				goodsId: req.query.goodsId
-			}).sort('cateId');
+			}).sort('goodsCategory');
 			let resultName = await Goods.find({
 				goodsName: {
 					$regex: req.query.goodsId,
 					$options: 'gi'
 				}
-			}).sort('cateId');
+			}).sort('goodsCategory');
 			if (resultId.length != 0) {
 				result = resultId
 			} else {
 				result = resultName
 			}
 		} else {
-			result = await Goods.find({});
+			result = await Goods.find({}).sort('goodsCategory');
 		}
 	}
 	res.json({
@@ -503,9 +495,7 @@ router.get('/goodslist', async (req, res) => {
 
 //获取商品的分类
 router.get('/goodscate', async (req, res) => {
-	let result = await Category.findOne({
-		cateId: req.query.cateId
-	});
+	let result = await Category.findOne({cateId: req.query.cateId});
 	res.json({
 		status_code: 200,
 		message: '获取分类信息成功',
@@ -734,5 +724,43 @@ router.get('/deleteorder', (req, res) => {
 		})
 	})
 })
+
+/**************************************** 数据统计 *******************************************/
+
+//获取数据统计数据
+router.get('/datalist', async (req, res) => {
+	let result = await Category.find({}).sort('cateId');
+	let xAxisData =[];
+	let seriesData = [];
+	for (let i = 0; i < result.length; i++) {
+		xAxisData.push(result[i].cateName);
+		seriesData.push(result[i].cateSales);
+	}
+	let option = {
+		title: {
+			text: '各分类月销量'
+		},
+		tooltip: {},
+		legend: {
+			data: ['销量']
+		},
+		xAxis: {
+			data: xAxisData
+		},
+		yAxis: {},
+		series: [{
+			name: '销量',
+			type: 'bar',
+			data: seriesData
+		}]
+	};
+	console.log(xAxisData,seriesData,option)
+	res.json({
+		status_code: 200,
+		message: '获取数据统计信息成功',
+		option: option
+	})
+})
+
 
 export default router;

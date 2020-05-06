@@ -37,7 +37,8 @@ const categorySchema = new mongoose.Schema({
 	cateId: String,
 	cateName: String,
 	//此分类下商品总数量
-	cateCounts: Number
+	cateCounts: Number,
+	cateSales: Number
 })
 export const Category = mongoose.model('Category', categorySchema)
 
@@ -63,6 +64,7 @@ export const Goods = mongoose.model('Goods', goodsSchema)
 const commentSchema = new mongoose.Schema({
 	goodsId: String,
 	userName: String,
+	nickName: String,
 	commentDetail: String,
 	comnentRating: Number
 })
@@ -73,16 +75,42 @@ const orderSchema = new mongoose.Schema({
 	goodsId: String,
 	goodsName: String,
 	userName: String,
-	userAdress: String,
-	userPhone: String,
+	receiverAdress: String,
+	detailedAddress: String,
+	receiverPhone: String,
 	goodsSize: String,
-	goodsCounts: String,
+	buyCounts: String,
 	totalPrice: String,
 	orderTime: Number,
 	isSuccess: Boolean,
-	userNote: String
+	userNote: String,
+	goodsCategory: String,
+	receiverName:String
 })
 export const Order = mongoose.model('Order', orderSchema)
+
+
+//设置轮播图规则
+const homecasualSchema = new mongoose.Schema({
+	homecasualId: String,
+	homecasualUrl: String
+})
+export const Homecasual = mongoose.model('Homecasual', homecasualSchema)
+
+//设置购物车规则
+const cartSchema = new mongoose.Schema({
+	goodsId: String,
+	shortName: String,
+	goodsName: String,
+	goodsCategory: String,
+	userName: String,
+	goodsSize: String,
+	goodsCounts: String,
+	buyCounts: String,
+	normalPrice: String,
+	goodsImg: String
+})
+export const Cart = mongoose.model('Cart', cartSchema)
 
 // Administrator.create({
 // 	adminName:'leaveHao',
@@ -129,9 +157,10 @@ export const Order = mongoose.model('Order', orderSchema)
 // })
 
 // Comment.create({
-// 	goodsId: '6666',
-// 	userName: '测试机器人1',
-// 	commentDetail: '非常不错！',
+// 	goodsId: '66001',
+// 	userName: '测试机器人2',
+// 	nickName: 'TestRobot2',
+// 	commentDetail: '非常舒适~',
 // 	comnentRating : 5
 // },(err,doc)=>{
 // 	console.log(err,doc)
@@ -148,6 +177,13 @@ export const Order = mongoose.model('Order', orderSchema)
 // 	totalPrice: '990',
 // 	orderTime: new Date().getTime(),
 // 	isSuccess: false
+// },(err,doc)=>{
+// 	console.log(err,doc)
+// })
+
+// Homecasual.create({
+// 	homecasualId: '1',
+// 	homecasualUrl: 'http://localhost:3000/homeimg/s1.jpg'
 // },(err,doc)=>{
 // 	console.log(err,doc)
 // })

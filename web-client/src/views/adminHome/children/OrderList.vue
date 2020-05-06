@@ -27,11 +27,17 @@
 							<el-form-item label="用户名">
 								<span>{{ props.row.userName}}</span>
 							</el-form-item>
+							<el-form-item label="收件人">
+								<span>{{ props.row.receiverName}}</span>
+							</el-form-item>
 							<el-form-item label="收货地址">
-								<span>{{ props.row.userAdress}}</span>
+								<span>{{ props.row.receiverAdress}}</span>
+							</el-form-item>
+							<el-form-item label="详细地址">
+								<span>{{ props.row.detailedAddress}}</span>
 							</el-form-item>
 							<el-form-item label="联系电话">
-								<span>{{ props.row.userPhone}}</span>
+								<span>{{ props.row.receiverPhone}}</span>
 							</el-form-item>
 							<el-form-item label="商品编号">
 								<span>{{ props.row.goodsId}}</span>
@@ -43,7 +49,7 @@
 								<span>{{ props.row.goodsSize }}</span>
 							</el-form-item>
 							<el-form-item label="购买数量">
-								<span>{{ props.row.goodsCounts}}</span>
+								<span>{{ props.row.buyCounts}}</span>
 							</el-form-item>
 							<el-form-item label="总付款">
 								<span>{{ props.row.totalPrice | showPrice}}元</span>
@@ -69,7 +75,7 @@
 						{{ props.row.orderTime | toTime}}
 					</template>
 				</el-table-column>
-				<el-table-column label="购买数量" prop="goodsCounts"></el-table-column>
+				<el-table-column label="购买数量" prop="buyCounts"></el-table-column>
 				<el-table-column label="订单状态" prop="isSuccess">
 					<template v-slot="props">
 						{{ props.row.isSuccess | toCN}}
@@ -101,26 +107,30 @@
 					<el-input v-model="editOrder_form.userName" disabled></el-input>
 				</el-form-item>
 				<!-- 收货地址 -->
-				<el-form-item label="收货地址" prop="userAdress">
-					<area-cascader :level="1" type="text" placeholder="请选择地区" v-model="editOrder_form.userAdress" :data="pcaa"></area-cascader>
+				<el-form-item label="收货地址" prop="receiverAdress">
+					<area-cascader :level="1" type="text" placeholder="请选择地区" v-model="editOrder_form.receiverAdress" :data="pcaa"></area-cascader>
+				</el-form-item>
+				<!-- 详细地址 -->
+				<el-form-item label="详细地址" prop="detailedAddress">
+					<el-input v-model="editOrder_form.detailedAddress" type="text" clearable></el-input>
 				</el-form-item>
 				<!-- 联系电话 -->
-				<el-form-item label="联系电话" prop="userPhone">
-					<el-input v-model="editOrder_form.userPhone" type="text" clearable></el-input>
+				<el-form-item label="联系电话" prop="receiverPhone">
+					<el-input v-model="editOrder_form.receiverPhone" type="text" clearable></el-input>
 				</el-form-item>
 				<!-- 商品尺寸 -->
 				<el-form-item label="商品尺寸" prop="goodsSize">
 					<el-input v-model="editOrder_form.goodsSize" type="text" clearable></el-input>
 				</el-form-item>
-			<!-- 订单状态 -->
-			<el-form-item label="订单状态" prop="isSuccess">
-				<el-switch v-model="editOrder_form.isSuccess">
-				</el-switch>
-			</el-form-item>
-			<!-- 备注 -->
-			<el-form-item label="备注" prop="userNote">
-				<el-input v-model="editOrder_form.userNote" type="text" clearable></el-input>
-			</el-form-item>
+				<!-- 订单状态 -->
+				<el-form-item label="订单状态" prop="isSuccess">
+					<el-switch v-model="editOrder_form.isSuccess">
+					</el-switch>
+				</el-form-item>
+				<!-- 备注 -->
+				<el-form-item label="备注" prop="userNote">
+					<el-input v-model="editOrder_form.userNote" type="text" clearable></el-input>
+				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="editDialogVisible = false">取 消</el-button>
@@ -163,8 +173,9 @@
 				editOrder_form: {
 					_id: '',
 					userName: '',
-					userAdress: [],
-					userPhone: '',
+					receiverAdress: [],
+					detailedAddress: '',
+					receiverPhone: '',
 					goodsSize: '',
 					isSuccess: false,
 					userNote: '',
@@ -181,12 +192,17 @@
 						message: '请填写用户名',
 						trigger: 'blur'
 					}],
-					userAdress: [{
+					receiverAdress: [{
 						required: true,
 						message: '请选择地址',
 						trigger: 'blur'
 					}],
-					userPhone: [{
+					detailedAddress: [{
+						required: true,
+						message: '请填写详细地址',
+						trigger: 'blur'
+					}],
+					receiverPhone: [{
 						required: true,
 						message: '请填写联系电话',
 						trigger: 'blur'
@@ -271,7 +287,7 @@
 			closeEdit() {
 				this.$refs.editOrder_form.resetFields();
 				this.showEdit = false;
-				this.editOrder_form.userAdress = [];
+				this.editOrder_form.receiverAdress = [];
 				var t = setTimeout(() => {
 					this.showEdit = true
 				}, 0);
@@ -284,17 +300,18 @@
 				})
 				this.editOrder_form._id = result.orders[0]._id;
 				this.editOrder_form.userName = result.orders[0].userName;
-				this.editOrder_form.userAdress = result.orders[0].userAdress.split(',');
-				this.editOrder_form.userPhone = result.orders[0].userPhone;
+				this.editOrder_form.receiverAdress = result.orders[0].receiverAdress.split(',');
+				this.editOrder_form.detailedAddress = result.orders[0].detailedAddress;
+				this.editOrder_form.receiverPhone = result.orders[0].receiverPhone;
 				this.editOrder_form.goodsSize = result.orders[0].goodsSize;
 				this.editOrder_form.isSuccess = result.orders[0].isSuccess;
 				this.editOrder_form.userNote = result.orders[0].userNote;
 			},
-			//提交编辑分类表单
-			editOrderInfo(){
+			//提交编辑订单表单
+			editOrderInfo() {
 				this.$refs.editOrder_form.validate(async boolean => {
 					if (!boolean) return;
-					this.editOrder_form.userAdress = this.editOrder_form.userAdress.join(',');
+					this.editOrder_form.receiverAdress = this.editOrder_form.receiverAdress.join(',');
 					let result = await editOrder(this.editOrder_form)
 					if (result.status_code !== 200) {
 						this.$msgbox({
@@ -325,7 +342,9 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(async () => {
-					let result = await deleteOrder({_id});
+					let result = await deleteOrder({
+						_id
+					});
 					if (result.status_code !== 200) {
 						this.$msgbox({
 							showClose: true,

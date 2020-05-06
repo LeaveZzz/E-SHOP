@@ -2,7 +2,7 @@
 	<el-container class="home_container">
 		<!-- 头部 -->
 		<el-header>
-			<h3>糕糕商城</h3>
+			<h3>网上服装商城系统</h3>
 			<h4>欢迎来到后台管理界面</h4>
 			<div>
 				<p>{{role}}: {{$store.state.adminName}}</p>
@@ -130,7 +130,8 @@
 					message: result.message,
 					type: 'info'
 				});
-				return this.$router.replace('/adminlogin')
+				this.$router.replace('/adminlogin');
+				return;
 			}
 			this.role = result.role
 			this.$store.commit(ADD_ADMIN_NAME, {

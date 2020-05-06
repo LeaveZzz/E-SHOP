@@ -1,31 +1,34 @@
 <template>
-	<div class="header_nav">
-		<p>嗨~欢迎来到糕糕商城</p>
-		<ul>
-			<li v-if="$store.state.userName">
-				<a href="javascript:;">{{'欢迎您 , '+$store.state.userName}}</a>
-				<a href="javascript:;" @click="layout">退出登录</a>
-			</li>
-			<li v-if="!$store.state.userName">
-				<router-link to="/userlogin">您好,请登录</router-link>
-				<router-link to="/userreg">免费注册</router-link>
-			</li>
-			<li v-if="$route.path.indexOf('/home') == -1">
-				<router-link to="/home">返回首页</router-link>
-			</li>
-			<li><a>个人中心</a></li>
-			<li><a>我的购物车</a></li>
-			<li><a @click="goAdmin">管理员通道</a></li>
-			<li><a>联系客服</a></li>
-			<li><a>网站导航</a></li>
-		</ul>
+	<div class="bogbox">
+		<div class="header_nav">
+			<p>嗨~欢迎来到网上服装商城系统</p>
+			<ul>
+				<li v-if="$store.state.userName">
+					<a href="javascript:;">{{'欢迎您 , '+$store.state.userName}}</a>
+					<a href="javascript:;" @click="layout">退出登录</a>
+				</li>
+				<li v-if="!$store.state.userName">
+					<router-link to="/userlogin">您好,请登录</router-link>
+					<router-link to="/userreg">免费注册</router-link>
+				</li>
+				<li v-if="$route.path.indexOf('/home') == -1">
+					<router-link to="/home">返回首页</router-link>
+				</li>
+				<li><a>个人中心</a></li>
+				<li><a @click="goShopCar">我的购物车</a></li>
+				<li><a @click="goAdmin">管理员通道</a></li>
+				<!-- <li><a>联系客服</a></li>
+				<li><a>网站导航</a></li> -->
+			</ul>
+		</div>
 	</div>
 </template>
 
 <script>
 	import {
 		ADD_USER_NAME,
-		REMOVE_USER_NAME
+		REMOVE_USER_NAME,
+		ADD_USER_INFO
 	} from 'store/mutation-types'
 	import {
 		isAdmin
@@ -36,11 +39,6 @@
 	} from 'network/user'
 	export default {
 		name: 'HeaderNav',
-		data() {
-			return {
-
-			}
-		},
 		async created() {
 			//判断用户是否为登录状态
 			let result = await isUser();
@@ -48,11 +46,25 @@
 				this.$store.commit(ADD_USER_NAME, {
 					userName: result.userName
 				});
+				this.$store.commit(ADD_USER_INFO, {
+					userInfo: result.userInfo,
+				});
 			}
 		},
 		methods: {
+			goShopCar() {
+				if (this.$store.state.userName) {
+					this.$router.replace('/cart');
+				} else {
+					this.$msgbox({
+						type: 'info',
+						message: "请先登录!",
+						showClose: true,
+					});
+				}
+			},
+			//验证权限,若是登录状态则直接进入管理员界面,否则进入登录页面
 			async goAdmin() {
-				//验证权限,若是登录状态则直接进入管理员界面,否则进入登录页面
 				let result = await isAdmin();
 				if (result.status_code !== 400) {
 					return this.$router.push('/adminhome')
@@ -69,6 +81,7 @@
 					type: 'info'
 				});
 				this.$store.commit(REMOVE_USER_NAME);
+				this.$bus.$emit('userLayout');
 			},
 		}
 	}
@@ -76,8 +89,15 @@
 
 <style scoped>
 	/*头部导航*/
+	.bogbox {
+		background: #F2F2F2;
+	}
+
 	.header_nav {
+		position: relative;
+		margin: 0 auto;
 		width: 100%;
+		max-width: 1400px;
 		height: 30px;
 		background: #F2F2F2;
 		font-family: "Microsoft YaHei";

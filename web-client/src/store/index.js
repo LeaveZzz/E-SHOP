@@ -8,7 +8,8 @@ Vue.use(Vuex)
 
 const state = {
 	adminName: '',
-	userName:''
+	userName:'',
+	userInfo:{}
 }
 
 const store = new Vuex.Store({

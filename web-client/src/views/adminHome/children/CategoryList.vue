@@ -19,6 +19,7 @@
 				<el-table-column label="ID" prop="cateId"></el-table-column>
 				<el-table-column label="名称" prop="cateName"></el-table-column>
 				<el-table-column label="商品数量" prop="cateCounts"></el-table-column>
+				<!-- <el-table-column label="销量" prop="cateSales"></el-table-column> -->
 				<el-table-column label="操作" width="177px">
 					<template v-slot="props">
 						<!-- 编辑按钮 -->

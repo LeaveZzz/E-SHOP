@@ -57,3 +57,93 @@ export function userLogout() {
 		url: '/user/logout'
 	})
 }
+
+//获取分类列表
+export function getCateList(params) {
+	return request({
+		url: '/user/catelist',
+		params
+	})
+}
+
+//获取轮播图列表
+export function getHomeCasual() {
+	return request({
+		url: '/user/gethomecasual',
+	})
+}
+
+//获取首页商品列表
+export function getHomeGoods() {
+	return request({
+		url: '/user/gethomegoods',
+	})
+}
+
+//获取商品列表
+export function getGoodsList(params) {
+	return request({
+		url: '/user/goodslist',
+		params
+	})
+}
+
+//获取评论列表
+export function getCommentList(params) {
+	return request({
+		url: '/user/commentlist',
+		params
+	})
+}
+
+//发表评论
+export function postComment(data) {
+	return request({
+		url: '/user/postcomment',
+		method: 'post',
+		data
+	})
+}
+
+//添加商品到购物车
+export function addGoodsToCart(data) {
+	return request({
+		url: '/user/addgoodstocart',
+		method: 'post',
+		data
+	})
+}
+
+//获取购物车列表
+export function getCartList(params) {
+	return request({
+		url: '/user/getcartlist',
+		params
+	})
+}
+
+//更新购物车数据
+export function updateCart(data) {
+	return request({
+		url: '/user/updatecart',
+		method: 'post',
+		data
+	})
+}
+
+//删除购物车内商品
+export function deleteCateGoods(params) {
+	return request({
+		url: '/user/deletecategoods',
+		params
+	})
+}
+
+//创建订单
+export function createOrder(data) {
+	return request({
+		url: '/user/createorder',
+		method: 'post',
+		data
+	})
+}
