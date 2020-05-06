@@ -455,13 +455,23 @@ router.post('/createorder', (req, res) => {
 			goodsSize: createOrderInfo.goodsSize
 		})
 		//更新商品库存
-		let resultId = await Goods.find({
+		let resultGoods = await Goods.find({
 			goodsId: createOrderInfo.goodsId
 		})
 		await Goods.updateOne({
 			goodsId: createOrderInfo.goodsId
 		}, {
-			goodsCounts: resultId[0].goodsCounts - Number(createOrderInfo.buyCounts)
+			goodsCounts: resultGoods[0].goodsCounts - Number(createOrderInfo.buyCounts)
+		})
+		//更新分类销量
+		let resultCate = await Category.findOne({
+			cateId: createOrderInfo.goodsCategory
+		})
+		console.log('resultCate',resultCate)
+		await Category.updateOne({
+			cateId: createOrderInfo.goodsCategory
+		}, {
+			cateSales: resultCate.cateSales + Number(createOrderInfo.buyCounts)
 		})
 		if (!err) {
 			console.log(doc)

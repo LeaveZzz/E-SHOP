@@ -128,7 +128,8 @@
 		getGoodsList,
 		getCommentList,
 		postComment,
-		addGoodsToCart
+		addGoodsToCart,
+		isUser
 	} from 'network/user'
 	export default {
 		data() {
@@ -212,6 +213,8 @@
 			},
 			//添加购物车
 			async addGoods() {
+				//判断用户是否为登录状态
+				let result = await isUser();
 				if(!this.goodsSize){
 					this.$msgbox({
 						type: 'info',
@@ -220,7 +223,7 @@
 					});
 					return;
 				}
-				if (this.$store.state.userName) {
+				if (result.status_code !== 400) {
 					let addGoodsToCartInfo = {
 						goodsId: this.goodsInfo.goodsId,
 						shortName: this.goodsInfo.shortName,
