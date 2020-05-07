@@ -147,3 +147,29 @@ export function createOrder(data) {
 		data
 	})
 }
+
+//编辑用户信息
+export function editUser(data) {
+	return request({
+		url: '/user/edituser',
+		method: 'post',
+		data
+	})
+}
+
+//获取订单列表
+export function getOrderList(params) {
+	return request({
+		url: '/user/orderlist',
+		params
+	})
+}
+
+//确认收货
+export function receiveGoods(data) {
+	return request({
+		url: '/user/receivegoods',
+		method: 'post',
+		data
+	})
+}

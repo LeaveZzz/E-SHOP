@@ -5,7 +5,7 @@
 			<ul>
 				<li v-if="$store.state.userName">
 					<a href="javascript:;">{{'欢迎您 , '+$store.state.userName}}</a>
-					<a href="javascript:;" @click="layout">退出登录</a>
+					<a href="javascript:;" @click="logout">退出登录</a>
 				</li>
 				<li v-if="!$store.state.userName">
 					<router-link to="/userlogin">您好,请登录</router-link>
@@ -14,7 +14,7 @@
 				<li v-if="$route.path.indexOf('/home') == -1">
 					<router-link to="/home">返回首页</router-link>
 				</li>
-				<li><a>个人中心</a></li>
+				<li v-if="$store.state.userName"><router-link to="/userhome">个人中心</router-link></li>
 				<li><a @click="goShopCar">我的购物车</a></li>
 				<li><a @click="goAdmin">管理员通道</a></li>
 				<!-- <li><a>联系客服</a></li>
@@ -73,7 +73,7 @@
 				}
 			},
 			//退出登录
-			async layout() {
+			async logout() {
 				let result = await userLogout();
 				this.$message({
 					showClose: true,

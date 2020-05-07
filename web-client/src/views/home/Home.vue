@@ -36,7 +36,7 @@
 					<p v-else class="userIn">
 						<a v-if="userInfo.nickName" style="margin-top: 30px;">您好,{{ userInfo.nickName }}</a>
 						<a v-else style="margin-top: 30px;">您好,{{ userInfo.userName }}</a>
-						<router-link to="/me" style="margin-top: 30px;">个人中心</router-link>
+						<router-link to="/userhome" style="margin-top: 30px;">个人中心</router-link>
 					</p>
 					<div class="rightBtn">
 						<button class="welfare">新人福利</button>

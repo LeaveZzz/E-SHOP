@@ -1,5 +1,8 @@
 import express from 'express'
 import md5 from 'blueimp-md5'
+import formidable from 'formidable'
+import mongoose from 'mongoose'
+import config from '../src/config.js'
 import {
 	User,
 	Category,
@@ -21,6 +24,7 @@ const S_KEY = 'leavehao@foxmail.com' //盐
 router.get('/sendmail', (req, res) => {
 	let userEmail = req.query.userEmail;
 	let confirmMes = randomNum();
+	req.session.userEmail = req.query.userEmail;
 	req.session.confirmMes = confirmMes;
 	console.log(confirmMes)
 	sendMail(userEmail, '网上服装商城系统', `Hi,您的注册验证码是:${confirmMes}`);
@@ -72,7 +76,7 @@ router.get('/checkemail', async (req, res) => {
 router.post('/register', async (req, res) => {
 	let regFrom = req.body;
 	// console.log(regFrom, req.session.confirmMes);
-	if (regFrom.confirmMes === req.session.confirmMes) {
+	if (regFrom.confirmMes == req.session.confirmMes && regFrom.userEmail == req.session.userEmail) {
 		User.create({
 			userName: regFrom.userName,
 			password: md5(md5(regFrom.userPsw) + S_KEY), //加密密码
@@ -467,7 +471,7 @@ router.post('/createorder', (req, res) => {
 		let resultCate = await Category.findOne({
 			cateId: createOrderInfo.goodsCategory
 		})
-		console.log('resultCate',resultCate)
+		console.log('resultCate', resultCate)
 		await Category.updateOne({
 			cateId: createOrderInfo.goodsCategory
 		}, {
@@ -486,6 +490,116 @@ router.post('/createorder', (req, res) => {
 				message: `商品ID:${createOrderInfo.goodsId},内部错误,创建订单失败`,
 			})
 		}
+	})
+})
+
+//编辑用户
+router.post('/edituser', (req, res) => {
+	const form = new formidable.IncomingForm();
+	form.uploadDir = config.uploadsAvatarPath; // 上传图片放置的文件夹
+	form.keepExtensions = true; // 保持文件的原始扩展名
+	form.parse(req, (err, fields, files) => {
+		if (fields.confirmMes) {
+			if (fields.confirmMes == req.session.confirmMes && fields.userEmail == req.session.userEmail) {
+				let avatar;
+				let userInfo = {
+					userName: fields.userName,
+					userEmail: fields.userEmail,
+					userPhone: fields.userPhone,
+					userSex: fields.userSex,
+					userSign: fields.userSign,
+					userAdress: fields.userAdress,
+					nickName: fields.nickName
+				}
+				if (files.userAvatar) {
+					avatar = 'http://localhost:' + config.port + '/avatar_uploads/' + path.basename(files.userAvatar.path);
+					userInfo.userAvatar = avatar
+				}
+				if (fields.userPsw) {
+					userInfo.password = md5(md5(fields.userPsw) + S_KEY); //加密密码
+				}
+				User.updateOne({
+					userName: fields.userName
+				}, userInfo).then((doc) => {
+					res.json({
+						status_code: 200,
+						message: '修改用户成功',
+					})
+				}).catch((err) => {
+					res.json({
+						status_code: 400,
+						message: '内部错误,修改用户信息失败',
+					})
+				})
+			} else {
+				res.json({
+					status_code: 400,
+					message: '验证码错误',
+				})
+			}
+		} else {
+			let avatar;
+			let userInfo = {
+				userName: fields.userName,
+				userEmail: fields.userEmail,
+				userPhone: fields.userPhone,
+				userSex: fields.userSex,
+				userSign: fields.userSign,
+				userAdress: fields.userAdress,
+				nickName: fields.nickName
+			}
+			if (files.userAvatar) {
+				avatar = 'http://localhost:' + config.port + '/avatar_uploads/' + path.basename(files.userAvatar.path);
+				userInfo.userAvatar = avatar
+			}
+			if (fields.userPsw) {
+				userInfo.password = md5(md5(fields.userPsw) + S_KEY); //加密密码
+			}
+			User.updateOne({
+				userName: fields.userName
+			}, userInfo).then((doc) => {
+				res.json({
+					status_code: 200,
+					message: '修改用户成功',
+				})
+			}).catch((err) => {
+				res.json({
+					status_code: 400,
+					message: '内部错误,修改用户信息失败',
+				})
+			})
+		}
+	})
+})
+
+//获取订单列表
+router.get('/orderlist', async (req, res) => {
+	let result = await Order.find({
+		userName: req.query.userName,
+	}).sort('-orderTime');
+	res.json({
+		status_code: 200,
+		message: '获取订单列表成功',
+		total: result.length,
+		orders: result
+	})
+})
+
+//确认收货
+router.post('/receivegoods', async (req, res) => {
+	Order.updateOne({
+		_id: mongoose.Types.ObjectId(req.body._id)
+	}, {isSuccess:true}).then((doc) => {
+		res.json({
+			status_code: 200,
+			message: '确认收货成功',
+		})
+	}).catch((err) => {
+		console.log(err)
+		res.json({
+			status_code: 400,
+			message: '内部错误,确认收货失败',
+		})
 	})
 })
 

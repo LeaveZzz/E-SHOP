@@ -7,8 +7,8 @@
           <el-button type="danger" icon="el-icon-search" @click="searchGoods"></el-button>
 				</div>
 		</div>
-		<div class="shopping_bag">
-			<a @click.prevent="goShopCar"><i class="el-icon-shopping-cart-2"></i>&nbsp;&nbsp;我的购物车</a>
+		<div class="shopping_bag" @click.prevent="goShopCar">
+			<a><i class="el-icon-shopping-cart-2"></i>&nbsp;&nbsp;我的购物车</a>
 		</div>
 	</div>
 </template>

@@ -7,6 +7,9 @@ const UserRegister = () => import('views/userRegister/UserRegister')
 const SearchGoods = () => import('views/searchGoods/SearchGoods')
 const GoodsDetail = () => import('views/goodsDetail/GoodsDetail')
 const Cart = () => import('views/cart/Cart')
+const UserHome = () => import('views/userHome/UserHome')
+const Profile = () => import('views/userHome/children/Profile')
+const Orders = () => import('views/userHome/children/Orders')
 //管理员相关路由
 const AdminLogin = () => import('views/adminLogin/AdminLogin')
 const AdminHome = () => import('views/adminHome/AdminHome')
@@ -88,11 +91,24 @@ const routes = [{
 		}
 	},
 	{
-	  path: '/cart',
-	  component: Cart,
-	  meta: {showHeaderTop: true}
+		path: '/cart',
+		component: Cart,
+		meta: {
+			showHeaderTop: true
+		}
 	},
 	{
+		path: '/userhome',
+		component: UserHome,
+		redirect: '/userhome/profile',
+		children: [{
+			path: 'profile',
+			component: Profile
+		}, {
+			path: 'orders',
+			component: Orders
+		}]
+	}, {
 		path: '/notfound',
 		component: NotFound
 	}
