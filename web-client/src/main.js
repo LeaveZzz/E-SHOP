@@ -5,6 +5,14 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+//图片懒加载
+import LazyLoad from 'vue-lazyload'
+Vue.use(LazyLoad, {
+  error:require('./assets/img/error.png'),
+  // 占位图
+  loading:require('./assets/img/loading.png')
+})
+
 //引入ElementUI库
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
