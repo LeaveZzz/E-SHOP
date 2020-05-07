@@ -94,7 +94,7 @@
 				<div class="media" v-for="(comment, index) in commentsList" :key="index">
 					<div class="media-body">
 						<h6 class="media-heading" v-if="comment.nickName">用户:&nbsp;{{ comment.nickName }}</h6>
-						<h6 class="media-heading" v-else>用户:&nbsp;{{ comment.useName }}</h6>
+						<h6 class="media-heading" v-else>用户:&nbsp;{{ comment.userName }}</h6>
 						<span>评论:</span>&nbsp;{{comment.commentDetail}}
 						<el-rate v-model="comment.comnentRating" disabled show-score text-color="#ff9900">
 						</el-rate>

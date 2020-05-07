@@ -106,6 +106,10 @@
 				<el-form-item label="用户名" prop="userName">
 					<el-input v-model="editOrder_form.userName" disabled></el-input>
 				</el-form-item>
+				<!-- 收件人 -->
+				<el-form-item label="收件人" prop="receiverName">
+					<el-input v-model="editOrder_form.receiverName"></el-input>
+				</el-form-item>
 				<!-- 收货地址 -->
 				<el-form-item label="收货地址" prop="receiverAdress">
 					<area-cascader :level="1" type="text" placeholder="请选择地区" v-model="editOrder_form.receiverAdress" :data="pcaa"></area-cascader>
@@ -173,6 +177,7 @@
 				editOrder_form: {
 					_id: '',
 					userName: '',
+					receiverName: '',
 					receiverAdress: [],
 					detailedAddress: '',
 					receiverPhone: '',
@@ -190,6 +195,11 @@
 					userName: [{
 						required: true,
 						message: '请填写用户名',
+						trigger: 'blur'
+					}],
+					receiverName: [{
+						required: true,
+						message: '请填写收件人',
 						trigger: 'blur'
 					}],
 					receiverAdress: [{
@@ -300,6 +310,7 @@
 				})
 				this.editOrder_form._id = result.orders[0]._id;
 				this.editOrder_form.userName = result.orders[0].userName;
+				this.editOrder_form.receiverName = result.orders[0].receiverName;
 				this.editOrder_form.receiverAdress = result.orders[0].receiverAdress.split(',');
 				this.editOrder_form.detailedAddress = result.orders[0].detailedAddress;
 				this.editOrder_form.receiverPhone = result.orders[0].receiverPhone;

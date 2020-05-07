@@ -30,7 +30,7 @@
 						</li>
 						<li class="td td-item">
 							<div class="td-item-pic">
-								<img :src="goods.goodsImg" @click="goDetail(goods.goodsId)"/>
+								<img :src="goods.goodsImg" @click="goDetail(goods.goodsId)" />
 							</div>
 							<div class="td-item-info" @click="goDetail(goods.goodsId)">{{goods.shortName}}</div>
 						</li>
@@ -211,8 +211,13 @@
 		},
 		methods: {
 			//前往详情页
-			goDetail(id){
-			  this.$router.push({path:'/goodsdetail',query:{goodsId:id}});
+			goDetail(id) {
+				this.$router.push({
+					path: '/goodsdetail',
+					query: {
+						goodsId: id
+					}
+				});
 			},
 			//获取购物车列表
 			async getCarts() {
@@ -233,6 +238,8 @@
 				})
 				this.getCarts();
 				this.getAllGoodsPrice();
+				this.totalPrice = 0;
+				this.totalAmount = 0;
 			},
 			//是否选中所有商品
 			selectedAll(isSelectedAll) {

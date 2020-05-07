@@ -11,7 +11,7 @@ let SmtpTransport = nodemailer.createTransport(smtpTransport({
 	}
 }));
 
-// recipient 收件人,subject 发送的主题,html 发送的html内容
+// recipient 收件人,subject 发送的主题,html 发送的内容
 export function sendMail(recipient, subject, html) {
 	SmtpTransport.sendMail({
 		from: config.email.user,
