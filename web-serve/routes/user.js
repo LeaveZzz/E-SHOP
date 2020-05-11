@@ -3,6 +3,7 @@ import md5 from 'blueimp-md5'
 import formidable from 'formidable'
 import mongoose from 'mongoose'
 import config from '../src/config.js'
+import path from 'path'
 import {
 	User,
 	Category,
