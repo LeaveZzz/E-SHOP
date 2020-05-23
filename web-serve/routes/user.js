@@ -275,7 +275,7 @@ router.get('/goodslist', async (req, res) => {
 				result = resultName
 			}
 		} else {
-			result = await Goods.find({});
+			result = await Goods.find({}).sort('goodsCategory');
 		}
 	}
 	res.json({

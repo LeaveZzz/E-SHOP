@@ -1,4 +1,4 @@
-const path = require('path')
+import path from 'path'
 export default {
 	publicPath: path.join(__dirname, '../public'),	//静态资源路径
 	uploadsGoodsPath: path.join(__dirname, '../public/uploads'), // 上传的商品图片所放置的文件夹
@@ -12,8 +12,8 @@ export default {
 	secret:'leavehao@foxmail.com',	//session
 	maxAge: 1000 * 60 * 60 * 6	,//session保存6个小时
 	email: {
-	        service: 'QQ',
-	        user: 'leavezzz@foxmail.com',
-	        pass: 'nlmbpzeggolzbdaa',
+	        service: 'QQ',  //邮箱服务商
+	        user: 'leavezzz@foxmail.com',	//发送验证码的邮箱
+	        pass: 'nlmbpzeggolzbdaa',  //邮箱服务密匙
 	    }
 }

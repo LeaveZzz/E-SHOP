@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"shopmall.comments"}],"uuid":"8a8218cd4b064d55a37a1f06720cac92"}
