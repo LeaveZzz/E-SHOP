@@ -13,7 +13,9 @@ export default {
 	maxAge: 1000 * 60 * 60 * 6	,//session保存6个小时
 	email: {
 	        service: 'QQ',  //邮箱服务商
-	        user: 'leavezzz@foxmail.com',	//发送验证码的邮箱
-	        pass: 'nlmbpzeggolzbdaa',  //邮箱服务密匙
+	        user: 'xxxxxxxxxx',	//发送验证码的邮箱
+	        pass: 'xxxxxxxxxx',  //邮箱服务密匙
 	    }
 }
+//超级管理员账号：
+//用户名：Leo 密码：980408
