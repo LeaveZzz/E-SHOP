@@ -3,6 +3,7 @@
 
 ## 项目地址
 * gitee地址[点击进入](https://gitee.com/leaveHao/E-SHOP.git)
+* github地址[点击进入](https://github.com/leaveHao/E-SHOP.git)
 
 ## 技术栈
 * 本项目采用前后端分离的开发方式，使用的技术栈是:Vue+Node+MongoDB
