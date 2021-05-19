@@ -66,7 +66,7 @@
 ### 服务器端
 **项目后端服务器是基于node、mongodb开发，运行前请确认系统已安装相关应用**
 * `npm install` 安装依赖 
-* 将`web-serve/db/shopmall`文件夹下的数据导入到`MongoDB`数据库中
+* 将`web-serve/db/shopmall`文件夹下的数据导入到`MongoDB`数据库中。数据库导出命令:`mongodump -h 127.0.0.1 -d shopmall -o E:\Program\E-Music\web-serve\db`,数据库导入命令:`mongorestore -d shopmall E:\Program\E-Music\web-serve\db\shopmall`
 * 修改`web-server/src/config.js`文件，根据注释按需修改。注册使用了邮箱验证，需要手动开启自己邮箱的POP3/SMTP/IMAP服务，具体过程这里不再赘述。
 * `node main.js` 运行服务
 
