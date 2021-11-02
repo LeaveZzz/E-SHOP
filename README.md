@@ -2,8 +2,8 @@
 * 网上服装商城系统
 
 ## 项目地址
-* gitee地址[点击进入](https://gitee.com/leaveHao/E-SHOP.git)
-* github地址[点击进入](https://github.com/leaveHao/E-SHOP.git)
+* gitee地址[点击进入](https://gitee.com/LeaveZzz/E-SHOP.git)
+* github地址[点击进入](https://github.com/withLeaveZzz/E-SHOP.git)
 
 ## 技术栈
 * 本项目采用前后端分离的开发方式，使用的技术栈是:Vue+Node+MongoDB
@@ -33,34 +33,34 @@
 ## 项目展示
 **图片若无法显示请刷新页面或稍后再试**
 #### 客户端主页
-![客户端主页](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/client_home.png)
+![客户端主页](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/client_home.png)
 #### 注册/登录
-![用户登录](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_login.png)
-![用户注册](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_reg.png)
+![用户登录](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_login.png)
+![用户注册](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_reg.png)
 #### 分类浏览
-![分类浏览](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_catefind.png)
+![分类浏览](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_catefind.png)
 #### 商品详情
-![商品详情](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_goodsdetail.png)
+![商品详情](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_goodsdetail.png)
 #### 购物车
-![购物车](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_shopcart.png)
+![购物车](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_shopcart.png)
 #### 创建订单
-![创建订单](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_createorder.png)
+![创建订单](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_createorder.png)
 #### 个人信息管理
-![个人信息管理](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_profile.png)
+![个人信息管理](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_profile.png)
 #### 订单列表
-![订单列表](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/user_profile.png)
+![订单列表](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/user_profile.png)
 #### 用户管理
-![用户管理](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_userlist.png)
+![用户管理](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_userlist.png)
 #### 权限管理
-![权限管理](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_adminlist.png)
+![权限管理](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_adminlist.png)
 #### 商品管理
-![商品管理](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_goodslist.png)
+![商品管理](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_goodslist.png)
 #### 分类列表
-![分类列表](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_catelist.png)
+![分类列表](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_catelist.png)
 #### 订单管理
-![订单管理](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_orderlist.png)
+![订单管理](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_orderlist.png)
 #### 数据统计
-![数据统计](https://gitee.com/leaveHao/Picturebed/raw/master/E-SHOP/admin_datalist.png)
+![数据统计](https://gitee.com/withLeaveZzz/Picturebed/raw/master/E-SHOP/admin_datalist.png)
 
 ## 运行
 ### 服务器端
