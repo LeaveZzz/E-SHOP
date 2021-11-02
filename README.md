@@ -2,8 +2,8 @@
 * 网上服装商城系统
 
 ## 项目地址
-* gitee地址[点击进入](https://gitee.com/LeaveZzz/E-SHOP.git)
-* github地址[点击进入](https://github.com/withLeaveZzz/E-SHOP.git)
+* gitee地址[点击进入](https://gitee.com/withLeaveZzz/E-SHOP.git)
+* github地址[点击进入](https://github.com/LeaveZzz/E-SHOP.git)
 
 ## 技术栈
 * 本项目采用前后端分离的开发方式，使用的技术栈是:Vue+Node+MongoDB
